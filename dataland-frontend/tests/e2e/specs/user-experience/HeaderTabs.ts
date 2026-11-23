@@ -7,7 +7,7 @@ describeIf(
     executionEnvironments: ['developmentLocal', 'ci', 'developmentCd'],
   },
   () => {
-    const tabNames = ['COMPANIES', 'MY DATASETS', 'MY PORTFOLIOS', 'MY DATA REQUESTS'];
+    const tabNames = ['COMPANIES', 'FRAMEWORKS', 'MY DATASETS', 'MY PORTFOLIOS', 'MY DATA REQUESTS'];
     const dummyCompany = {
       companyId: 'dummy-company-id',
       companyName: 'Dummy Company',

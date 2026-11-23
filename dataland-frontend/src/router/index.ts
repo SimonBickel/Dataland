@@ -11,6 +11,7 @@ const SingleDataRequest = (): Promise<RouteComponent> => import('@/components/pa
 const ViewFrameworkData = (): Promise<RouteComponent> => import('@/components/pages/ViewFrameworkData.vue');
 const DocumentOverview = (): Promise<RouteComponent> => import('@/components/pages/DocumentOverview.vue');
 const DatasetOverview = (): Promise<RouteComponent> => import('@/components/pages/DatasetOverview.vue');
+const FrameworksOverview = (): Promise<RouteComponent> => import('@/components/pages/FrameworksOverview.vue');
 const MyDataRequestsOverview = (): Promise<RouteComponent> => import('@/components/pages/MyDataRequestsOverview.vue');
 
 const PortfolioOverview = (): Promise<RouteComponent> => import('@/components/pages/PortfolioOverview.vue');
@@ -155,6 +156,15 @@ const routes = [
       datasetJudgementId: route.params.datasetJudgementId as string,
     }),
     meta: {
+      requiresAuthentication: true,
+    },
+  },
+  {
+    path: '/frameworks',
+    name: 'Frameworks Overview',
+    component: FrameworksOverview,
+    meta: {
+      initialTabId: 'frameworks',
       requiresAuthentication: true,
     },
   },
