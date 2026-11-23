@@ -20,6 +20,14 @@
               :company-id="companyID"
             />
             <slot name="reportingPeriodDropdown" />
+            <router-link
+              v-if="hasFrameworkDocumentation"
+              :to="`/frameworks/${dataType}`"
+              class="flex align-items-center pl-3"
+              data-test="frameworkDocumentationLink"
+            >
+              <i class="pi pi-book mr-2" />Framework documentation
+            </router-link>
             <div class="flex align-content-start align-items-center pl-3">
               <ToggleSwitch
                 class="form-field vertical-middle"
@@ -136,6 +144,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { forceFileDownload, groupReportingPeriodsPerFrameworkForCompany } from '@/utils/FileDownloadUtils.ts';
 import { useDialog } from 'primevue/usedialog';
 import QaDatasetModal from '@/components/general/QaDatasetModal.vue';
+import { useListFrameworkSpecificationsQuery } from '@/api-queries/specification-service/framework/useListFrameworkSpecificationsQuery';
 
 const props = defineProps<{
   companyID: string;
@@ -144,6 +153,10 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(['updateActiveDataMetaInfoForChosenFramework']);
+const { data: frameworkSpecifications } = useListFrameworkSpecificationsQuery();
+const hasFrameworkDocumentation = computed(() =>
+  (frameworkSpecifications.value ?? []).some((specification) => specification.framework.id === props.dataType)
+);
 const router = useRouter();
 const route = useRoute();
 const dialog = useDialog();

@@ -7,6 +7,10 @@
       <Card class="col-12 text-left page-wrapper-card">
         <template #title> New Dataset - Framework </template>
         <template #content>
+          <Message severity="info" class="mb-3" data-test="frameworkDocumentationHint">
+            Not sure which data a framework asks for? Read the
+            <router-link to="/frameworks">framework documentation</router-link>.
+          </Message>
           <div class="uploadFormWrapper grid">
             <div id="euTaxonomyContainer" class="col-9 flex">
               <div id="euTaxonomyLabel" class="col-3 p-3">
@@ -75,6 +79,7 @@ import { assertDefined } from '@/utils/TypeScriptUtils';
 import { type DataMetaInformation, DataTypeEnum } from '@clients/backend';
 import type Keycloak from 'keycloak-js';
 import Card from 'primevue/card';
+import Message from 'primevue/message';
 import { defineComponent, inject } from 'vue';
 
 export default defineComponent({
@@ -85,6 +90,7 @@ export default defineComponent({
     CompanyInformation,
     TheContent,
     Card,
+    Message,
     MetaInfoPerCompanyAndFramework,
   },
   setup() {
