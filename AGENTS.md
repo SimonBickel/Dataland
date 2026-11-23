@@ -84,6 +84,8 @@
 - Use PrimeVue and PrimeIcons for UI components. Do not add alternative UI libraries unless explicitly required.
 - Use PrimeVue default styling where possible. Add scoped styling only when necessary.
 - If you touch frontend files, do not introduce new `@ts-nocheck` usage in the modified files.
+- Keep text within its container at all screen sizes; wrap long words and URLs instead of clipping them.
+- Use high-contrast colors for text, controls, and highlights; pair color-coded indicators with labels or icons.
 
 ## Frontend Data Fetching (applies even if the task does not mention it)
 
