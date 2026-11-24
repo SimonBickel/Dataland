@@ -59,6 +59,27 @@ describeIf(
       visitPagesAndCheckTabsVisibility(['/datasets'], true);
     });
 
+    it('navigates from the FRAMEWORKS tab to a framework documentation page', () => {
+      cy.ensureLoggedInAsReader();
+      const framework = { framework: { id: 'sfdr', ref: 'r1' }, name: 'SFDR' };
+      cy.intercept('GET', '**/specifications/frameworks', [framework]).as('listFrameworks');
+      cy.intercept('GET', '**/specifications/frameworks/sfdr', {
+        ...framework,
+        businessDefinition: 'Sustainable finance disclosures',
+        schema: JSON.stringify({ general: { fiscalYearEnd: { id: 'extendedDateFiscalYearEnd', ref: 'r2' } } }),
+      }).as('getFramework');
+
+      cy.visitAndCheckAppMount('/companies');
+      cy.contains('FRAMEWORKS').click();
+      cy.url().should('match', /\/frameworks$/);
+      cy.wait('@listFrameworks');
+      cy.get('[data-test="frameworksHeadline"]').should('be.visible');
+      cy.get('[data-test="frameworkCard-sfdr"]').click();
+      cy.url().should('include', '/frameworks/sfdr');
+      cy.wait('@getFramework');
+      cy.get('[data-test="frameworkName"]').should('contain.text', 'SFDR');
+    });
+
     it('shows tabs on portfolios pages', () => {
       cy.ensureLoggedInAsReader();
       visitPagesAndCheckTabsVisibility(['/portfolios'], true);
