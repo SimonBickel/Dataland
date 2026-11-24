@@ -105,14 +105,12 @@
                       >
                         {{ row.label }}
                       </button>
-                      <em
+                      <DataPointInfoLink
                         v-if="row.explanation"
-                        class="material-icons inline-flex align-items-center ml-2 cursor-help"
-                        aria-hidden="true"
-                        v-tooltip.top="{ value: row.explanation }"
-                      >
-                        info
-                      </em>
+                        :framework-id="props.framework"
+                        :data-point-type-id="row.dataPointTypeId"
+                        :explanation="row.explanation"
+                      />
                     </div>
                   </td>
 
@@ -197,6 +195,7 @@
 
 <script setup lang="ts">
 import { computed, watch } from 'vue';
+import DataPointInfoLink from '@/components/resources/dataTable/DataPointInfoLink.vue';
 import MultiLayerDataTableCell from '@/components/resources/dataTable/MultiLayerDataTableCell.vue';
 import { getFrontendFrameworkDefinition } from '@/frameworks/FrontendFrameworkRegistry';
 import type { MLDTCellConfig, MLDTConfig } from '@/components/resources/dataTable/MultiLayerDataTableConfiguration';
@@ -218,7 +217,6 @@ import {
 } from '@clients/qaservice';
 
 import type { FrameworkData } from '@/utils/GenericFrameworkTypes.ts';
-import Tooltip from 'primevue/tooltip';
 import DatalandProgressSpinner from '@/components/general/DatalandProgressSpinner.vue';
 import { useGetFrameworkDataQuery } from '@/api-queries/backend/framework-data/useGetFrameworkDataQuery.ts';
 import ShowMultipleReportsBanner from '@/components/resources/frameworkDataSearch/ShowMultipleReportsBanner.vue';
@@ -249,8 +247,6 @@ const viewConfig = computed(() => frameworkDefinition.value?.getFrameworkViewCon
 const mldtConfig = computed<MLDTConfig<FrameworkData> | undefined>(
   () => viewConfig.value?.configuration as MLDTConfig<FrameworkData> | undefined
 );
-
-const vTooltip = Tooltip;
 
 const frameworkRef = computed(() => props.framework);
 const dataIdRef = computed(() => props.dataId);

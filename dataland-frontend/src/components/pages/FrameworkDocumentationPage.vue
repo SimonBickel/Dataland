@@ -120,7 +120,9 @@ const pathByTypeId = computed(() => new Map(dataPoints.value.map((entry) => [ent
 
 const selectedPath = computed(() => {
   const value = route.query.dataPoint;
-  return typeof value === 'string' ? value : undefined;
+  if (typeof value === 'string') return value;
+  const typeId = route.query.dataPointTypeId;
+  return typeof typeId === 'string' ? pathByTypeId.value.get(typeId) : undefined;
 });
 const selectedEntry = computed(() => dataPoints.value.find((entry) => entry.path === selectedPath.value));
 const selectedLeaf = computed<DataPointLeafData | undefined>(() =>

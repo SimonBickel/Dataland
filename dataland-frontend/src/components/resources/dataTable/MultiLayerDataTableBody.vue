@@ -13,16 +13,13 @@
           data-row-header="true"
         >
           <span class="table-left-label">{{ cellOrSectionConfig.label }}</span>
-          <em
+          <DataPointInfoLink
             v-if="cellOrSectionConfig.explanation"
-            class="material-icons info-icon"
-            aria-hidden="true"
-            :title="cellOrSectionConfig.label"
-            v-tooltip.top="{
-              value: cellOrSectionConfig.explanation,
-            }"
-            >info</em
-          >
+            class="info-icon"
+            :framework-id="dataAndMetaInfo[0]?.metaInfo?.dataType"
+            :data-point-type-id="cellOrSectionConfig.dataPointTypeId"
+            :explanation="cellOrSectionConfig.explanation"
+          />
         </td>
         <td
           v-for="(sinlgeDataAndMetaInfo, idx) in dataAndMetaInfo"
@@ -119,6 +116,7 @@
 <script setup lang="ts" generic="T">
 import { type DataAndMetaInformation } from '@/api-models/DataAndMetaInformation';
 import MultiLayerDataTableBody from '@/components/resources/dataTable/MultiLayerDataTableBody.vue';
+import DataPointInfoLink from '@/components/resources/dataTable/DataPointInfoLink.vue';
 import MultiLayerDataTableCell from '@/components/resources/dataTable/MultiLayerDataTableCell.vue';
 import {
   isCellOrSectionVisible,
